@@ -16,6 +16,8 @@ import { City } from './core/models';
 })
 export class AppComponent {
   title = 'city-app';
+
+  pageSizeOptions = [5, 10, 20, 25, 50];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   obs!: Observable<any>;
   dataSource: MatTableDataSource<City> = new MatTableDataSource<City>([]);

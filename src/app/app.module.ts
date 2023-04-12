@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CityCardComponent } from './business/components/city-card/city-card.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CityCardComponent
   ],
   imports: [
     BrowserModule,
