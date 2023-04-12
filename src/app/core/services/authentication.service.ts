@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthInfo } from '../models/auth-info';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private isLoggedInSubject = new BehaviorSubject(false)
-  private loginStatus$ = this.isLoggedInSubject.asObservable()
+  private authInfoSubject: BehaviorSubject<AuthInfo> = new BehaviorSubject({isLoggedIn:true, canEdit:true})
+  private authInfo$ = this.authInfoSubject.asObservable()
 
   constructor() { }
 
-  getLoginStatus(): Observable<boolean>{
-    return this.loginStatus$;
+  getAuthInfo(): Observable<AuthInfo>{
+    return this.authInfo$;
   }
 }

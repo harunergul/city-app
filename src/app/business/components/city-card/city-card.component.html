@@ -7,7 +7,7 @@
         <img mat-card-image src="{{city.photo_url}}" style="width: 100%" alt="Picture for {{city.name}} is not available">
 
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button>UPDATE</button>
+    <mat-card-actions *ngIf="canEdit" >
+        <button mat-raised-button (click)="openEditDialog($event)">UPDATE</button>
     </mat-card-actions>
 </mat-card>

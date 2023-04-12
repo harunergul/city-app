@@ -19,11 +19,13 @@ export class AppComponent implements OnDestroy {
   title = 'city-app';
 
   isLoggedIn = false;
+  canEdit = false;
   loginStatusSub: Subscription;
   constructor(public authService: AuthenticationService) {
 
-    this.loginStatusSub = this.authService.getLoginStatus().subscribe(status => {
-      this.isLoggedIn = status;
+    this.loginStatusSub = this.authService.getAuthInfo().subscribe(status => {
+      this.isLoggedIn = status.isLoggedIn;
+      this.canEdit = status.canEdit;
     })
   }
   ngOnDestroy(): void {

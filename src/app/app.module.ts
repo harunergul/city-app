@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CityCardComponent } from './business/components/city-card/city-card.component';
 import { CityListComponent } from './business/pages/city-list/city-list.component';
 import { LoginComponent } from './business/pages/login/login.component';
+import { EditCityComponent } from './business/components/edit-city/edit-city.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CityCardComponent,
     CityListComponent,
-    LoginComponent
+    LoginComponent,
+    EditCityComponent
   ],
   imports: [
     BrowserModule,
