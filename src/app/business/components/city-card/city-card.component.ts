@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { City } from 'src/app/core/models';
 
 @Component({
   selector: 'app-city-card',
@@ -7,6 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CityCardComponent {
 
-  @Input() city;
+  @Input() city: City;
 
 }

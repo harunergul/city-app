@@ -7,11 +7,15 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CityCardComponent } from './business/components/city-card/city-card.component';
+import { CityListComponent } from './business/pages/city-list/city-list.component';
+import { LoginComponent } from './business/pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CityCardComponent
+    CityCardComponent,
+    CityListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

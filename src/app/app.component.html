@@ -1,22 +1,15 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button  [routerLink]="['/']" class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
   <span>City App</span>
+
+  <span class="example-spacer"></span>
+  <button mat-icon-button [routerLink]="['/login']">
+    <mat-icon class="login-icon">person</mat-icon>
+  </button>
 </mat-toolbar>
 
 <div class="container">
-  <form>
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search" value="">
-    </mat-form-field>
-  </form>
-
-  <ng-container *ngFor="let card of obs | async">
-    <app-city-card [city]="card"></app-city-card>
-  </ng-container>
-
-  <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions"> </mat-paginator>
-
   <router-outlet></router-outlet>
 </div>

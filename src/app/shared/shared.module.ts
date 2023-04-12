@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 let materialModules = [
   MatToolbarModule,
   MatIconModule,
@@ -17,11 +18,12 @@ let materialModules = [
   MatInputModule
 ]
 
+let commonModules = [ FormsModule, ReactiveFormsModule]
 @NgModule({
   declarations: [],
   imports: [
     CommonModule
   ],
-  exports: [...materialModules]
+  exports: [...commonModules, ...materialModules]
 })
 export class SharedModule { }
