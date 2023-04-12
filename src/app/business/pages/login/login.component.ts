@@ -1,27 +1,40 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
+  })
 
-  submit() {
-    if (this.form.valid) {
-      this.submitEM.emit(this.form.value);
-    }
-  }
   errorMessage: string | null;
 
-  @Output() submitEM = new EventEmitter();
-
-  constructor(){
-    //this.errorMessage = "There is an error"
+  constructor(private fb: FormBuilder) {
   }
+  ngOnInit(): void {
+    this.loginForm.valueChanges.subscribe(value => {
+      if (this.loginForm.valid) {
+        this.errorMessage = null;
+      }
+    }
+    );
+  }
+
+
+
+  submit() {
+    console.log(this.loginForm.valid)
+
+    if (this.loginForm.valid) {
+      console.log("Making http request");
+    } else {
+      this.errorMessage = "Please enter username and password";
+    }
+  }
+
 }

@@ -5,8 +5,12 @@
   <span>City App</span>
 
   <span class="example-spacer"></span>
-  <button mat-icon-button [routerLink]="['/login']">
+  <button mat-icon-button [routerLink]="['/login']" *ngIf="!isLoggedIn">
     <mat-icon class="login-icon">person</mat-icon>
+  </button>
+
+  <button mat-icon-button [routerLink]="['/login']" *ngIf="isLoggedIn">
+    <mat-icon class="logout">logout</mat-icon>
   </button>
 </mat-toolbar>
 
