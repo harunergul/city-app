@@ -15,4 +15,7 @@ export class AuthenticationService {
   getAuthInfo(): Observable<AuthInfo>{
     return this.authInfo$;
   }
+  getToken(): String{
+    return localStorage.getItem("TOKEN")
+  }
 }

@@ -1,6 +1,6 @@
 <form>
     <mat-form-field class="search-form">
-      <input matInput placeholder="Search" value="">
+      <input matInput placeholder="Search" value=""  (keyup)="applyFilter($event)">
     </mat-form-field>
   </form>
 

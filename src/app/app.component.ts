@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@ang
 import { Observable, Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { CityService } from './core/city.service';
+import { CityService } from './business/services/city.service';
 import { City } from './core/models';
 import { AuthenticationService } from './core/services/authentication.service';
 

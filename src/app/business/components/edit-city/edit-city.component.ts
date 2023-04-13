@@ -15,21 +15,21 @@ export class EditCityComponent implements OnInit{
   }
   ngOnInit(): void { 
     let name = '';
-    let photo_url = this.data?.photo_url || '';
+    let photoUrl = this.data?.photoUrl || '';
     if(this.data.city){
       const city = this.data?.city;
       name = city.name;
-      photo_url = city.photo_url;
+      photoUrl = city.photoUrl;
     }
 
     this.editCityForm =  this.fb.group({
       name: [name, Validators.required],
-      photo_url: [photo_url, Validators.required]
+      photoUrl: [photoUrl, Validators.required]
     })
   }
 
   get cityPhotoUrl() {
-    return this.editCityForm.get('photo_url').value;
+    return this.editCityForm.get('photoUrl').value;
   }
 
 }

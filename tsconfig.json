@@ -25,6 +25,9 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "paths": {
+      "@environment":["/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -32,5 +35,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     
-  }
+  },
+
 }
