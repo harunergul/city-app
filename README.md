@@ -15,6 +15,9 @@ Used features: Interceptors, Routings, Guards, Services, Components, Jwt Authent
 ## Supporting Filter 
 ![List Page](https://github.com/harunergul/city-app/blob/main/misc/list_page.png)
 
+## Supporting Pagination 
+![List Page](https://github.com/harunergul/city-app/blob/main/misc/pagination_support.png)
+
 ## Login Page
 ![Login Page](https://github.com/harunergul/city-app/blob/main/misc/login_page.png)
 ## Admin List Page
