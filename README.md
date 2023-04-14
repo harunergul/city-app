@@ -12,7 +12,7 @@ Used features: Interceptors, Routings, Guards, Services, Components, Jwt Authent
 
 **Note:** Only the user with **ROLE_ALLOW_EDIT** can update the records. Eventough there are **ROLE_ALLOW_CREATE** exist there isn't related functionality.
 
-You can check backend code from 
+> You can check backend code from 
 [this repository](https://github.com/harunergul/city-app-backend "City-App-Backend Repository").
 
 
