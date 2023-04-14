@@ -37,13 +37,17 @@ export class CityListComponent {
       this.pageInfo = pageInfo;
     })
 
-    this.searchTextChangedSub = this.searchTextChanged.pipe(debounceTime(150), distinctUntilChanged()).subscribe(searchTerm => this.loadCities())
+    this.searchTextChangedSub = this.searchTextChanged.pipe(debounceTime(150), distinctUntilChanged()).subscribe(searchTerm => {
+      this.paginator.pageIndex = 0;
+      this.loadCities()
+    })
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.searchTextChanged.next(filterValue);
+
   }
 
   loadCities() {
@@ -63,7 +67,7 @@ export class CityListComponent {
       .subscribe();
   }
 
-  
+
 
   ngOnDestroy() {
     if (this.searchTextChangedSub) {
