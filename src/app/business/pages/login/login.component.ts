@@ -1,5 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -14,27 +18,50 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string | null;
 
-  constructor(private fb: FormBuilder) {
+  loginRequest = false;
+
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router
+    ) {
   }
   ngOnInit(): void {
+
     this.loginForm.valueChanges.subscribe(value => {
       if (this.loginForm.valid) {
         this.errorMessage = null;
       }
-    }
-    );
+    });
   }
 
 
 
   submit() {
-    console.log(this.loginForm.valid)
 
     if (this.loginForm.valid) {
-      console.log("Making http request");
+      this.loginRequest = true;
+      this.authService.login(this.loginForm.value).subscribe(
+        {
+          next: (value) => {
+            if(value){
+              this.router.navigateByUrl("/");
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err)
+            this.errorMessage  = err?.error?.message
+            this.loginRequest = false;
+          },
+          complete: () => {
+
+          }
+        });
+
+
+
     } else {
       this.errorMessage = "Please enter username and password";
     }
   }
+
+ 
 
 }

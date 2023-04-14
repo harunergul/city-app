@@ -1,10 +1,6 @@
 
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { CityService } from './business/services/city.service';
-import { City } from './core/models';
+import { Component,  OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from './core/services/authentication.service';
 
 
@@ -18,15 +14,19 @@ import { AuthenticationService } from './core/services/authentication.service';
 export class AppComponent implements OnDestroy {
   title = 'city-app';
 
-  isLoggedIn = false;
+  loggedIn = false;
   canEdit = false;
   loginStatusSub: Subscription;
   constructor(public authService: AuthenticationService) {
 
     this.loginStatusSub = this.authService.getAuthInfo().subscribe(status => {
-      this.isLoggedIn = status.isLoggedIn;
+      this.loggedIn = status.loggedIn;
       this.canEdit = status.canEdit;
     })
+  }
+
+  logout(){
+    this.authService.logout();
   }
   ngOnDestroy(): void {
     this.loginStatusSub || this.loginStatusSub.unsubscribe();

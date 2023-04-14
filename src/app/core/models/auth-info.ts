@@ -1,4 +1,5 @@
 export interface AuthInfo {
-    isLoggedIn: boolean,
+    loggedIn: boolean,
     canEdit: boolean
+    jwt?: string
 }

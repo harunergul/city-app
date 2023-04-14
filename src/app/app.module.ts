@@ -14,7 +14,7 @@ import { EditCityComponent } from './business/components/edit-city/edit-city.com
 import { environment } from '../environments/environment'
 import { APP_ENVIRONMENT } from './shared';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SecurityTokenInterceptor } from './core/interceptors/token.interceptor';
+import { CommonRequestInterceptor } from './core/interceptors/common.interceptor';
 
 
 @NgModule({
@@ -35,7 +35,7 @@ import { SecurityTokenInterceptor } from './core/interceptors/token.interceptor'
   providers: [{provide: APP_ENVIRONMENT, useValue: environment}, 
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: SecurityTokenInterceptor,
+      useClass: CommonRequestInterceptor,
       multi: true,
     }],
   bootstrap: [AppComponent]

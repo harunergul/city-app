@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input , OnDestroy} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { City } from 'src/app/core/models';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { EditCityComponent } from '../edit-city/edit-city.component';
 
@@ -9,13 +10,14 @@ import { EditCityComponent } from '../edit-city/edit-city.component';
   templateUrl: './city-card.component.html',
   styleUrls: ['./city-card.component.scss']
 })
-export class CityCardComponent {
+export class CityCardComponent implements OnDestroy{
 
   @Input() city: City;
 
   canEdit = false;
+  editSubscription : Subscription;
   constructor(private authService: AuthenticationService, public dialog: MatDialog) {
-    this.authService.getAuthInfo().subscribe(loginStatus => {
+    this.editSubscription = this.authService.getAuthInfo().subscribe(loginStatus => {
       this.canEdit = loginStatus.canEdit
     })
   }
@@ -23,7 +25,6 @@ export class CityCardComponent {
   
   openEditDialog(event:Event) {
     event.stopPropagation();
-    console.log("open")
     const dialogRef = this.dialog.open(EditCityComponent, {
       width:'800px',
       minWidth:'400px',
@@ -36,5 +37,11 @@ export class CityCardComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  ngOnDestroy(): void {
+    this.editSubscription || this.editSubscription.unsubscribe();
+  }
+
+  
 
 }
