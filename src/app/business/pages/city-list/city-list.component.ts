@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { CityService } from 'src/app/business/services/city.service';
-import { City } from 'src/app/core/models';
-import { PagedData } from 'src/app/core/models/page-vo';
+import { PageInfo } from 'src/app/core/models/page-vo';
+import { CityDataSource } from './city-data-source';
 
 @Component({
   selector: 'app-city-list',
@@ -12,52 +12,62 @@ import { PagedData } from 'src/app/core/models/page-vo';
   styleUrls: ['./city-list.component.scss']
 })
 export class CityListComponent {
+  displayedColumns = ["name"];
   pageSizeOptions = [5, 10, 20, 25, 50];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  obs!: Observable<any>;
-  dataSource: MatTableDataSource<City> = new MatTableDataSource<City>([]);
+  dataSource: CityDataSource;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private cityService: CityService) {
+  pageInfo: PageInfo = {
+    totalItems: 0,
+    currentPage: 0,
+    totalPages: 0
+  };
+
+  filterContent = "";
+  searchTextChanged = new Subject<string>();
+  searchTextChangedSub: Subscription;
+
+  constructor(private cityService: CityService) {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<City>([]);
-    this.cityService.getCities().subscribe((resp: PagedData<City[]>) => {
-      this.dataSource.data = resp.data
-    });
-    this.dataSource.filterPredicate = this.filterBySubject();
-    this.changeDetectorRef.detectChanges();
-    this.dataSource.paginator = this.paginator;
-    this.obs = this.dataSource.connect();
+    this.dataSource = new CityDataSource(this.cityService)
+    this.dataSource.loadCities()
+    this.dataSource.pageInfo$.subscribe((pageInfo: PageInfo) => {
+      this.pageInfo = pageInfo;
+    })
+
+    this.searchTextChangedSub = this.searchTextChanged.pipe(debounceTime(150), distinctUntilChanged()).subscribe(searchTerm => this.loadCities())
   }
 
-  applyFilter(event: Event) {
-    let filterValue = (event.target as HTMLInputElement).value;
-    filterValue = filterValue.trim(); 
-    filterValue = filterValue.toLowerCase(); 
-    this.dataSource.filter = filterValue;
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.searchTextChanged.next(filterValue);
   }
 
-  filterBySubject() {
-    let filterFunction =
-      (data: City, filter: string): boolean => {
+  loadCities() {
+    this.dataSource.loadCities(
+      this.filterContent,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
 
-        if (filter) {
-          if (data.name.toLowerCase().includes(filter.toLowerCase())) {
-            return true;
-          }
-          return false;
-        } else {
-          return true;
-        }
-      };
-    return filterFunction;
+    );
   }
+
+  ngAfterViewInit() {
+    this.paginator.page
+      .pipe(
+        tap(() => this.loadCities())
+      )
+      .subscribe();
+  }
+
+  
 
   ngOnDestroy() {
-    if (this.dataSource) {
-      this.dataSource.disconnect();
+    if (this.searchTextChangedSub) {
+      this.searchTextChangedSub.unsubscribe()
     }
   }
-
 }

@@ -14,17 +14,15 @@ export class SecurityTokenInterceptor implements HttpInterceptor {
     constructor(public configService: ConfigService, private authService: AuthenticationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let requestInfo : any = {
-            
+        let requestInfo: any = {
+
             url: `${this.configService.BASE_URL}${request.url}`
         }
-        console.log(this.authService.getToken)
-        if(this.authService.getToken()!==null){
+        if (this.authService.getToken() !== null) {
             requestInfo.setHeaders = {
                 Authorization: `Bearer ${this.authService.getToken()}`
             };
         }
-        console.log(requestInfo);
         request = request.clone(requestInfo); return next.handle(request);
     }
 }  

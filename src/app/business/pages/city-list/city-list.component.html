@@ -1,11 +1,22 @@
 <form>
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search" value=""  (keyup)="applyFilter($event)">
-    </mat-form-field>
-  </form>
+  <mat-form-field class="search-form">
+    <input matInput placeholder="Search" value="" [(ngModel)]="filterContent" (ngModelChange)="applyFilter($event)"
+      [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+</form>
 
-  <ng-container *ngFor="let card of obs | async">
-    <app-city-card [city]="card"></app-city-card>
+<div *ngIf="dataSource.loading$ | async">
+  <mat-spinner class="spinner-center"></mat-spinner>
+</div>
+<mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <div *matCellDef="let city" width="100%" style="width: 100%">
+      <app-city-card [city]="city"></app-city-card>
+    </div>
   </ng-container>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-  <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions"> </mat-paginator>
+</mat-table>
+
+<mat-paginator [showFirstLastButtons]="true" [length]="pageInfo.totalItems" [pageSizeOptions]="pageSizeOptions">
+</mat-paginator>

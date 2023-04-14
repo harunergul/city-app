@@ -1,4 +1,4 @@
-export interface PageVo {
+export interface PageInfo {
     totalItems:number;
     totalPages:number,
     currentPage: number
@@ -6,6 +6,6 @@ export interface PageVo {
 }
 
 export interface PagedData<T> {
-    pageInfo: PageVo;
+    pageInfo: PageInfo;
     data: T
 }

@@ -8,6 +8,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule } from '@angular/material/table';
+import {MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 let materialModules = [
@@ -18,7 +20,9 @@ let materialModules = [
   MatPaginatorModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule ,
+  MatProgressSpinnerModule
 ]
 
 let commonModules = [ FormsModule, ReactiveFormsModule]
