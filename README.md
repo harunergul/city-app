@@ -13,4 +13,12 @@ Used features: Interceptors, Routings, Guards, Services, Components, Jwt Authent
 **Note:** Only the user with **ROLE_ALLOW_EDIT** can update the records. Eventough there are **ROLE_ALLOW_CREATE** exist there isn't related functionality.
 
 ## Supporting Filter 
-![alt text](https://github.com/harunergul/city-app/blob/main/misc/list_page.png)
+![List Page](https://github.com/harunergul/city-app/blob/main/misc/list_page.png)
+
+## Login Page
+![Login Page](https://github.com/harunergul/city-app/blob/main/misc/login_page.png)
+## Admin List Page
+![Admin List Page](https://github.com/harunergul/city-app/blob/main/misc/admin_page.png)
+
+## Admin Update Record
+![Admin List Page](https://github.com/harunergul/city-app/blob/main/misc/admin_update.png)
