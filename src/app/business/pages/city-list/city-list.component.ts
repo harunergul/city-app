@@ -59,6 +59,11 @@ export class CityListComponent {
     );
   }
 
+  cityUpdated($event){
+    console.log("City updated");
+    this.loadCities();
+  }
+
   ngAfterViewInit() {
     this.paginator.page
       .pipe(

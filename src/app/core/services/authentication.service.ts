@@ -56,12 +56,13 @@ export class AuthenticationService {
     
     if(this.getToken() && !this.isTokenExpired()){
       initialAuthInfo.loggedIn= true;
-      this.jwtHelper.decodeToken();
       const decodedToken = this.jwtHelper.decodeToken();
       if(decodedToken?.roles){
         let roles = decodedToken.roles
         initialAuthInfo.canEdit = roles.find(role => role==='ROLE_ALLOW_EDIT')
+        initialAuthInfo.username = decodedToken.username;
       }
+      
     }
     return initialAuthInfo;
   }

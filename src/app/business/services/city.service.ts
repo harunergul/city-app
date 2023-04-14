@@ -24,4 +24,8 @@ export class CityService {
       params: params
     });
   }
+
+  editCity(city: City): Observable<City> {
+    return this.httpClient.put<City>("/cities/edit", city);
+  }
 }

@@ -14,6 +14,7 @@ import { AuthenticationService } from './core/services/authentication.service';
 export class AppComponent implements OnDestroy {
   title = 'city-app';
 
+  loggedInUser = "";
   loggedIn = false;
   canEdit = false;
   loginStatusSub: Subscription;
@@ -22,6 +23,7 @@ export class AppComponent implements OnDestroy {
     this.loginStatusSub = this.authService.getAuthInfo().subscribe(status => {
       this.loggedIn = status.loggedIn;
       this.canEdit = status.canEdit;
+      this.loggedInUser = status.username;
     })
   }
 

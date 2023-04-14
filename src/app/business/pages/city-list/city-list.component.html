@@ -11,7 +11,7 @@
 <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
   <ng-container matColumnDef="name">
     <div *matCellDef="let city" width="100%" style="width: 100%">
-      <app-city-card [city]="city"></app-city-card>
+      <app-city-card [city]="city" (cityUpdated)="cityUpdated($event)"></app-city-card>
     </div>
   </ng-container>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

@@ -1,4 +1,4 @@
-import { Component, Input , OnDestroy} from '@angular/core';
+import { Component, EventEmitter, Input , OnDestroy, Output} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { City } from 'src/app/core/models';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { EditCityComponent } from '../edit-city/edit-city.component';
 export class CityCardComponent implements OnDestroy{
 
   @Input() city: City;
+  @Output() cityUpdated = new EventEmitter();
 
   canEdit = false;
   editSubscription : Subscription;
@@ -34,7 +35,9 @@ export class CityCardComponent implements OnDestroy{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if(result?.isSuccess){
+        this.cityUpdated.emit(result);
+      }
     });
   }
 

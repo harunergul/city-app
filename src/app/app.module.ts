@@ -23,7 +23,7 @@ import { CommonRequestInterceptor } from './core/interceptors/common.interceptor
     CityCardComponent,
     CityListComponent,
     LoginComponent,
-    EditCityComponent
+    EditCityComponent,
   ],
   imports: [
     BrowserModule,

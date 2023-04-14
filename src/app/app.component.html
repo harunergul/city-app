@@ -8,8 +8,9 @@
   <button mat-icon-button [routerLink]="['/login']" *ngIf="!loggedIn">
     <mat-icon class="login-icon">person</mat-icon>
   </button>
-
+  {{loggedInUser}}
   <button mat-icon-button (click)="logout()" *ngIf="loggedIn">
+   
     <mat-icon class="logout">logout</mat-icon>
   </button>
 </mat-toolbar>
