@@ -1,33 +1,46 @@
-
-import { Component,  OnDestroy} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from './core/services/authentication.service';
-
-
-
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styles: [
+    `
+      .container {
+        margin: auto;
+        max-width: 700px;
+      }
+
+      .example-spacer {
+        flex: 1 1 auto;
+      }
+
+      .login-icon {
+        background: #a4c4fc;
+        color: #4374e3;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+      }
+    `,
+  ],
 })
 export class AppComponent implements OnDestroy {
   title = 'city-app';
 
-  loggedInUser = "";
+  loggedInUser = '';
   loggedIn = false;
   canEdit = false;
   loginStatusSub: Subscription;
   constructor(public authService: AuthenticationService) {
-
-    this.loginStatusSub = this.authService.getAuthInfo().subscribe(status => {
+    this.loginStatusSub = this.authService.getAuthInfo().subscribe((status) => {
       this.loggedIn = status.loggedIn;
       this.canEdit = status.canEdit;
       this.loggedInUser = status.username;
-    })
+    });
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
   }
   ngOnDestroy(): void {
