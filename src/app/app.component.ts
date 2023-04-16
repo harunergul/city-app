@@ -1,6 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from './core/states/auth/auth.reducer';
+import { selectAdminCanEdit, selectIsLoggedIn } from './core/states/auth/auth.selectors';
+import { loadStateFromLocalStorage } from './core/states/storage/storage.action';
 
 @Component({
   selector: 'app-root',
@@ -28,14 +32,20 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnDestroy {
   title = 'city-app';
 
+
+  
   loggedInUser = '';
-  loggedIn = false;
-  canEdit = false;
+  loggedIn$ = this.store.select(selectIsLoggedIn)
+  canEdit$ = this.store.select(selectAdminCanEdit);
   loginStatusSub: Subscription;
-  constructor(public authService: AuthService) {
+  constructor(
+    public authService: AuthService,
+    private store: Store<AuthState>
+  ) {
+
+    this.store.dispatch(loadStateFromLocalStorage());
+    
     this.loginStatusSub = this.authService.getAuthInfo().subscribe((status) => {
-      this.loggedIn = status.loggedIn;
-      this.canEdit = status.canEdit;
       this.loggedInUser = status.username;
     });
   }

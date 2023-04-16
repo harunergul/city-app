@@ -4,14 +4,13 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { LoginComponent } from './auth/login/login.component';
 import { AppCommonModule } from '../app-common.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
- 
-
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { authReducer } from './states/auth/auth.reducer';
+import { AuthReducer } from './states/auth/auth.reducer';
 import { AuthEffects } from './states/auth/auth.effects';
-import { STATE_AUTH } from './states/auth/auth.actions';
+import { AUTH_STATE } from './states/auth/auth.reducer';
+import { LocalStorageEffects } from './states/storage/storage.effects';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -22,15 +21,15 @@ export function tokenGetter() {
   imports: [
     AppCommonModule,
     HttpClientModule,
-    
+
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         skipWhenExpired: true,
       },
     }),
-    StoreModule.forRoot({ [STATE_AUTH]: authReducer }),
-    EffectsModule.forRoot([AuthEffects]),
+    StoreModule.forRoot({ [AUTH_STATE]: AuthReducer }),
+    EffectsModule.forRoot([AuthEffects, LocalStorageEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

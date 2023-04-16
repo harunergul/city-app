@@ -1,6 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
+import { JWTInvalidError } from '../../models/jwtinvalid-error';
 
 import * as AuthActions from './auth.actions';
+
+export const AUTH_STATE = 'AUTH_STATE';
 
 export interface AuthState {
   jwt: string;
@@ -22,23 +25,34 @@ const onLoginSucess = (state, response: AuthActions.AuthResponse) => {
   return state;
 };
 
-export const authReducer = createReducer(
+export const AuthReducer = createReducer(
   initialState,
   on(AuthActions.loginRequest, (state) => ({ ...state })),
   on(AuthActions.logout, (state) => ({ ...state, loggedIn: false })),
   on(AuthActions.loginSuccess, onLoginSucess),
   on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error })),
-  on(AuthActions.setDecodedJWTContent, (state, decodedJWT: AuthActions.JwtTokenContent) => {
+  on(AuthActions.setJWTContent, (state, decodedJWT: AuthActions.JwtContent) => {
     state = {
       ...state,
+      loggedIn: true,
       roles: decodedJWT.roles,
       username: decodedJWT.username,
     };
-    console.log("state being setted")
     return state;
   }),
   on(AuthActions.DecodingJWTFailure, (state, { error }) => {
-    console.log("error", error);
+    if (!(error instanceof JWTInvalidError)) {
+      console.error('Fix this issue ');
+      console.error('DecodingJWTFailure error-> ', error);
+    }
+
+    state = {
+      ...state,
+      loggedIn: false,
+      roles: [],
+      username: '',
+    };
+
     return state;
-  }),
+  })
 );

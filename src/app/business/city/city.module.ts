@@ -6,18 +6,8 @@ import { CityRoutingModule } from './city-routing.module';
 import { CityCardComponent } from './components/city-card/city-card.component';
 import { EditCityComponent } from './components/edit-city/edit-city.component';
 
-
-
 @NgModule({
-  declarations: [
-    CityListComponent,
-    CityCardComponent,
-    EditCityComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    CityRoutingModule
-  ]
+  declarations: [CityListComponent, CityCardComponent, EditCityComponent],
+  imports: [CommonModule, SharedModule, CityRoutingModule],
 })
-export class CityModule { }
+export class CityModule {}

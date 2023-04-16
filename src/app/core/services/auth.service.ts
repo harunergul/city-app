@@ -20,6 +20,11 @@ export class AuthService {
     private httpClient: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
+    // this.store
+    //   .select((state) => state.loggedIn)
+    //   .subscribe((resp) => {
+    //     console.log('auth state', resp);
+    //   });
     // this.isLoggedIn$ = this.store.select((state) => state.loggedIn);
     // this.username$ = this.store.select((state) => state.username);
     // this.error$ = this.store.select((state) => state.error);

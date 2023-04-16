@@ -12,7 +12,6 @@ export class LoginPageGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      console.log("visiting here!")
       if(this.authService.isTokenExpired()){
         return true;
       }else{

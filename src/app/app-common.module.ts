@@ -26,10 +26,10 @@ let materialModules = [
   MatProgressSpinnerModule
 ]
 
-let commonModules = [ FormsModule, ReactiveFormsModule]
+let commonModules = [ CommonModule,  FormsModule, ReactiveFormsModule]
 
 @NgModule({
   declarations: [], 
-  exports: [CommonModule, ...commonModules, ...materialModules]
+  exports: [...commonModules, ...materialModules]
 })
 export class AppCommonModule { }
