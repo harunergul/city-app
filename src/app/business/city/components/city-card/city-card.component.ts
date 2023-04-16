@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input , OnDestroy, Output} from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { City } from 'src/app/core/models';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { EditCityComponent } from '../edit-city/edit-city.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class CityCardComponent implements OnDestroy{
 
   canEdit = false;
   editSubscription : Subscription;
-  constructor(private authService: AuthenticationService, public dialog: MatDialog) {
+  constructor(private authService: AuthService, public dialog: MatDialog) {
     this.editSubscription = this.authService.getAuthInfo().subscribe(loginStatus => {
       this.canEdit = loginStatus.canEdit
     })

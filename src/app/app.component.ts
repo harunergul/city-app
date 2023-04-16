@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from './core/services/authentication.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +32,7 @@ export class AppComponent implements OnDestroy {
   loggedIn = false;
   canEdit = false;
   loginStatusSub: Subscription;
-  constructor(public authService: AuthenticationService) {
+  constructor(public authService: AuthService) {
     this.loginStatusSub = this.authService.getAuthInfo().subscribe((status) => {
       this.loggedIn = status.loggedIn;
       this.canEdit = status.canEdit;

@@ -2,8 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import * as AuthActions from '../../states/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   loginRequest = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router
+  constructor(private store: Store, private fb: FormBuilder, private authService: AuthService, private router: Router
     ) {
   }
   ngOnInit(): void {
@@ -35,7 +37,10 @@ export class LoginComponent implements OnInit {
 
 
   submit() {
+    
+    this.store.dispatch(AuthActions.loginRequest(this.loginForm.value));
 
+    /*
     if (this.loginForm.valid) {
       this.loginRequest = true;
       this.authService.login(this.loginForm.value).subscribe(
@@ -60,6 +65,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.errorMessage = "Please enter username and password";
     }
+    */
   }
 
  
