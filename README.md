@@ -2,7 +2,7 @@
 
 Developed in Angular 15
 
-Used features: Interceptors, Routings, Guards, Services, Components, Jwt Authentication, CDK collections, Angular material components, RxJS, Server side pagination and filtering. 
+Used features: Interceptors, NgRx State management, Routings, Guards, Services, Components, Jwt Authentication, CDK collections, Angular material components, RxJS, Server side pagination and filtering. 
 
 | Username    | Password  | Roles |
 | :---------- | :-------: | :---- |
