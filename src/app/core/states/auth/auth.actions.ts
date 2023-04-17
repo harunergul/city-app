@@ -1,7 +1,6 @@
 import { NavigationExtras } from '@angular/router';
 import { createAction, props } from '@ngrx/store';
 
-
 export interface AuthRequest {
   username: string;
   password: string;

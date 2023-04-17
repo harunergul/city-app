@@ -25,6 +25,11 @@ export const selectUsername = createSelector(
   (state) => state.username
 );
 
+export const selectLoginError = createSelector(
+  authStateFull,
+  (state:AuthState) => state.error
+);
+
 export const selectRoles = createSelector(
   authStateFull,
   (state) => state.roles

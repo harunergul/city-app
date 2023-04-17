@@ -10,6 +10,10 @@ export interface AuthState {
   loggedIn: boolean;
   username: string;
   roles: string[];
+  error?: {
+    errorCode: string;
+    message: string;
+  };
 }
 
 export const initialState: AuthState = {
@@ -17,6 +21,10 @@ export const initialState: AuthState = {
   loggedIn: false,
   username: '',
   roles: [],
+  error: {
+    errorCode: '',
+    message: '',
+  },
 };
 
 const onLoginSucess = (state, response: AuthActions.AuthResponse) => {
@@ -29,12 +37,16 @@ export const AuthReducer = createReducer(
   initialState,
   on(AuthActions.loginRequest, (state) => ({ ...state })),
   on(AuthActions.logout, (state) => {
-    localStorage.removeItem("access_token");
-    return { ...state, loggedIn: false, username:'',jwt:'',roles:[] }}
-    
-    ),
+    localStorage.removeItem('access_token');
+    return { ...state, loggedIn: false, username: '', jwt: '', roles: [] };
+  }),
   on(AuthActions.loginSuccess, onLoginSucess),
-  on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error })),
+  on(AuthActions.loginFailure, (state, { error }) => {
+    const loginError = error?.error;
+    state = { ...state, error: loginError };
+    console.log(state)
+    return state
+  }),
   on(AuthActions.setJWTContent, (state, decodedJWT: AuthActions.JwtContent) => {
     state = {
       ...state,

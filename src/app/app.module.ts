@@ -1,38 +1,36 @@
 import { NgModule } from '@angular/core';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { environment } from '../environments/environment'
+import { environment } from '../environments/environment';
 import { APP_ENVIRONMENT } from './shared';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonRequestInterceptor } from './core/interceptors/common.interceptor';
 import { CityModule } from './business/city/city.module';
 import { BrowserModule } from '@angular/platform-browser';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
     BrowserAnimationsModule,
-    CityModule
+    CityModule,
   ],
-  providers: [{provide: APP_ENVIRONMENT, useValue: environment}, 
+  providers: [
+    { provide: APP_ENVIRONMENT, useValue: environment },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CommonRequestInterceptor,
       multi: true,
-    }],
-  bootstrap: [AppComponent]
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

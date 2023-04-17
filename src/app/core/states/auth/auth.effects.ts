@@ -20,7 +20,6 @@ export class AuthEffects {
       switchMap((authRequest: AuthActions.AuthRequest) =>
         this.authService.login(authRequest).pipe(
           map((response) => AuthActions.loginSuccess(response)),
-
           catchError((error) => of(AuthActions.loginFailure({ error })))
         )
       )

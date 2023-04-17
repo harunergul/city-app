@@ -4,13 +4,17 @@ import { LoginComponent } from './core/auth/login/login.component';
 import { LoginPageGuard } from './core/guards/login-page.guard';
 
 const routes: Routes = [
-  {path: '',   redirectTo: '/city' , pathMatch: 'full'},
-  {path:'login', canActivate:[LoginPageGuard],  component:LoginComponent},
-  {path:'city',  loadChildren: () => import('./business/city/city.module').then(m => m.CityModule)}
+  { path: '', redirectTo: '/city', pathMatch: 'full' },
+  { path: 'login', canActivate: [LoginPageGuard], component: LoginComponent },
+  {
+    path: 'city',
+    loadChildren: () =>
+      import('./business/city/city.module').then((m) => m.CityModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

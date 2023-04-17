@@ -1,15 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { City } from 'src/app/core/models';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { EditCityComponent } from '../edit-city/edit-city.component';
 import { selectAdminCanEdit } from 'src/app/core/states/auth/auth.selectors';
 import { AuthState } from 'src/app/core/states/auth/auth.reducer';
@@ -24,10 +16,7 @@ export class CityCardComponent {
   @Output() cityUpdated = new EventEmitter();
 
   canEdit$ = this.store.select(selectAdminCanEdit);
-  constructor(
-    public dialog: MatDialog,
-    private store: Store<AuthState>
-  ) {}
+  constructor(public dialog: MatDialog, private store: Store<AuthState>) {}
 
   openEditDialog(event: Event) {
     event.stopPropagation();

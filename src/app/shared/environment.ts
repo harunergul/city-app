@@ -1,3 +1,3 @@
 export interface Environment {
-    BASE_URL: string
+  BASE_URL: string;
 }

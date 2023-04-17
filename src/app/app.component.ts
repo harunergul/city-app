@@ -28,8 +28,8 @@ import { loadStateFromLocalStorage } from './core/states/storage/storage.action'
     `,
   ],
 })
-export class AppComponent{
-  appTitle= "City App";
+export class AppComponent {
+  appTitle = 'City App';
   loggedInUser$ = this.store.select(AuthSelector.selectUsername);
   loggedIn$ = this.store.select(AuthSelector.selectIsLoggedIn);
   canEdit$ = this.store.select(AuthSelector.selectAdminCanEdit);
