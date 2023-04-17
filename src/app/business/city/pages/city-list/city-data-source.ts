@@ -1,22 +1,24 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Observable, BehaviorSubject, of, catchError, finalize } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { City } from 'src/app/core/models';
-import { PagedData, PageInfo } from 'src/app/core/models/page-vo';
+import { Store } from '@ngrx/store';
 import { CityService } from '../../services/city.service';
-
+import * as CityActions from '../../states/city/city.actions';
+import * as CitySelectors from '../../states/city/city.selectors';
+import { CityListRequest } from '../../models/city-list-request';
 export class CityDataSource implements DataSource<City> {
   private citiesSubject = new BehaviorSubject<City[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  private pageInfoSubject = new BehaviorSubject<PageInfo>({
-    currentPage: 0,
-    totalItems: 0,
-    totalPages: 0,
-  });
 
-  public loading$ = this.loadingSubject.asObservable();
-  public pageInfo$ = this.pageInfoSubject.asObservable();
+  public loading$ = this.store.select(CitySelectors.selectIsLoading);
+  public pageInfo$ = this.store.select(CitySelectors.selectPageInfo);
 
-  constructor(private cityService: CityService) {}
+  constructor(private cityService: CityService, private store: Store) {
+    this.store
+      .select(CitySelectors.selectCityList)
+      .subscribe((cityList: City[]) => {
+        this.citiesSubject.next(cityList);
+      });
+  }
 
   connect(collectionViewer: CollectionViewer): Observable<City[]> {
     return this.citiesSubject.asObservable();
@@ -24,26 +26,9 @@ export class CityDataSource implements DataSource<City> {
 
   disconnect(collectionViewer: CollectionViewer): void {
     this.citiesSubject.complete();
-    this.loadingSubject.complete();
   }
 
-  loadCities(filter = '', page = 0, pageSize = 10) {
-    this.loadingSubject.next(true);
-
-    this.cityService
-      .getCities(filter, page, pageSize)
-      .pipe(
-        catchError(() =>
-          of({
-            data: [],
-            pageInfo: { currentPage: 0, totalItems: 0, totalPages: 0 },
-          })
-        ),
-        finalize(() => this.loadingSubject.next(false))
-      )
-      .subscribe((pagedResponse: PagedData<City[]>) => {
-        this.pageInfoSubject.next(pagedResponse.pageInfo);
-        this.citiesSubject.next(pagedResponse.data);
-      });
+  loadCities(request: CityListRequest) {
+    this.store.dispatch(CityActions.loadCities(request));
   }
 }

@@ -44,7 +44,6 @@ export const AuthReducer = createReducer(
   on(AuthActions.loginFailure, (state, { error }) => {
     const loginError = error?.error;
     state = { ...state, error: loginError };
-    console.log(state)
     return state
   }),
   on(AuthActions.setJWTContent, (state, decodedJWT: AuthActions.JwtContent) => {

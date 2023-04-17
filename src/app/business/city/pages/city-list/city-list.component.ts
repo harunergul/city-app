@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { Subject, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PageInfo } from 'src/app/core/models/page-vo';
 import { CityService } from '../../services/city.service';
 import { CityDataSource } from './city-data-source';
+import { CityListRequest } from '../../models';
 
 @Component({
   selector: 'app-city-list',
@@ -27,11 +29,15 @@ export class CityListComponent {
   searchTextChanged = new Subject<string>();
   searchTextChangedSub: Subscription;
 
-  constructor(private cityService: CityService) {}
+  constructor(private cityService: CityService, private store: Store) {}
 
   ngOnInit() {
-    this.dataSource = new CityDataSource(this.cityService);
-    this.dataSource.loadCities();
+    this.dataSource = new CityDataSource(this.cityService, this.store);
+    this.dataSource.loadCities({
+      filter: this.filterContent,
+      page: 0,
+      pageSize: 5,
+    });
     this.dataSource.pageInfo$.subscribe((pageInfo: PageInfo) => {
       this.pageInfo = pageInfo;
     });
@@ -51,11 +57,13 @@ export class CityListComponent {
   }
 
   loadCities() {
-    this.dataSource.loadCities(
-      this.filterContent,
-      this.paginator.pageIndex,
-      this.paginator.pageSize
-    );
+    this.filterContent, this.paginator.pageIndex, this.paginator.pageSize;
+    let requestBody: CityListRequest = {
+      filter: this.filterContent,
+      page: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize,
+    };
+    this.dataSource.loadCities(requestBody);
   }
 
   cityUpdated($event) {

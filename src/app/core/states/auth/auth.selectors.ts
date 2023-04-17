@@ -11,12 +11,10 @@ export const selectIsLoggedIn = createSelector(
 export const selectAdminCanEdit = createSelector(
   authStateFull,
   (state: AuthState) =>{
-
     if(state?.roles){
       return state.roles.indexOf('ROLE_ALLOW_EDIT')!=-1;
     }
     return false;
-
   } 
 );
 
