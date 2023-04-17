@@ -28,7 +28,11 @@ const onLoginSucess = (state, response: AuthActions.AuthResponse) => {
 export const AuthReducer = createReducer(
   initialState,
   on(AuthActions.loginRequest, (state) => ({ ...state })),
-  on(AuthActions.logout, (state) => ({ ...state, loggedIn: false })),
+  on(AuthActions.logout, (state) => {
+    localStorage.removeItem("access_token");
+    return { ...state, loggedIn: false, username:'',jwt:'',roles:[] }}
+    
+    ),
   on(AuthActions.loginSuccess, onLoginSucess),
   on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error })),
   on(AuthActions.setJWTContent, (state, decodedJWT: AuthActions.JwtContent) => {

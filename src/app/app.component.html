@@ -7,13 +7,15 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>City App</span> 
+  <span>{{appTitle}}</span> 
   <span class="example-spacer"></span>
   <ng-container *ngIf="(loggedIn$ | async); else notLoggedIn">
+    {{ (loggedInUser$ | async) }}
     <button mat-icon-button (click)="logout()">
+     
       <mat-icon class="logout">logout</mat-icon>
     </button>
-    {{ loggedInUser }}
+    
   </ng-container>
 
   <ng-template #notLoggedIn>

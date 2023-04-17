@@ -60,7 +60,6 @@ export class CityListComponent {
   }
 
   cityUpdated($event){
-    console.log("City updated");
     this.loadCities();
   }
 

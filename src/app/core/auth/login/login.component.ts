@@ -40,32 +40,32 @@ export class LoginComponent implements OnInit {
     
     this.store.dispatch(AuthActions.loginRequest(this.loginForm.value));
 
-    /*
-    if (this.loginForm.valid) {
-      this.loginRequest = true;
-      this.authService.login(this.loginForm.value).subscribe(
-        {
-          next: (value) => {
-            if(value){
-              this.router.navigateByUrl("/");
-            }
-          },
-          error: (err: HttpErrorResponse) => {
-            console.log(err)
-            this.errorMessage  = err?.error?.message
-            this.loginRequest = false;
-          },
-          complete: () => {
+    
+    // if (this.loginForm.valid) {
+    //   this.loginRequest = true;
+    //   this.authService.login(this.loginForm.value).subscribe(
+    //     {
+    //       next: (value) => {
+    //         if(value){
+    //           this.router.navigateByUrl("/");
+    //         }
+    //       },
+    //       error: (err: HttpErrorResponse) => {
+    //         console.log(err)
+    //         this.errorMessage  = err?.error?.message
+    //         this.loginRequest = false;
+    //       },
+    //       complete: () => {
 
-          }
-        });
+    //       }
+    //     });
 
 
 
-    } else {
-      this.errorMessage = "Please enter username and password";
-    }
-    */
+    // } else {
+    //   this.errorMessage = "Please enter username and password";
+    // }
+    
   }
 
  

@@ -1,9 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { AuthService } from './core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { AuthState } from './core/states/auth/auth.reducer';
-import { selectAdminCanEdit, selectIsLoggedIn } from './core/states/auth/auth.selectors';
+import * as AuthSelector from './core/states/auth/auth.selectors';
 import { loadStateFromLocalStorage } from './core/states/storage/storage.action';
 
 @Component({
@@ -29,31 +28,19 @@ import { loadStateFromLocalStorage } from './core/states/storage/storage.action'
     `,
   ],
 })
-export class AppComponent implements OnDestroy {
-  title = 'city-app';
-
-
-  
-  loggedInUser = '';
-  loggedIn$ = this.store.select(selectIsLoggedIn)
-  canEdit$ = this.store.select(selectAdminCanEdit);
-  loginStatusSub: Subscription;
+export class AppComponent{
+  appTitle= "City App";
+  loggedInUser$ = this.store.select(AuthSelector.selectUsername);
+  loggedIn$ = this.store.select(AuthSelector.selectIsLoggedIn);
+  canEdit$ = this.store.select(AuthSelector.selectAdminCanEdit);
   constructor(
     public authService: AuthService,
     private store: Store<AuthState>
   ) {
-
     this.store.dispatch(loadStateFromLocalStorage());
-    
-    this.loginStatusSub = this.authService.getAuthInfo().subscribe((status) => {
-      this.loggedInUser = status.username;
-    });
   }
 
   logout() {
     this.authService.logout();
-  }
-  ngOnDestroy(): void {
-    this.loginStatusSub || this.loginStatusSub.unsubscribe();
   }
 }
