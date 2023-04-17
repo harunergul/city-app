@@ -3,10 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Subject, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { PageInfo } from 'src/app/core/models/page-vo';
-import { CityService } from '../../services/city.service';
+import { PageInfo } from 'src/app/core/models/page-vo'; 
 import { CityDataSource } from './city-data-source';
 import { CityListRequest } from '../../models';
+import * as CityListActions from '../../states/city/city.actions';
 
 @Component({
   selector: 'app-city-list',
@@ -17,7 +17,7 @@ export class CityListComponent {
   displayedColumns = ['name'];
   pageSizeOptions = [5, 10, 20, 25, 50];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  dataSource: CityDataSource;
+  dataSource: CityDataSource = new CityDataSource(this.store);
 
   pageInfo: PageInfo = {
     totalItems: 0,
@@ -29,10 +29,9 @@ export class CityListComponent {
   searchTextChanged = new Subject<string>();
   searchTextChangedSub: Subscription;
 
-  constructor(private cityService: CityService, private store: Store) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
-    this.dataSource = new CityDataSource(this.cityService, this.store);
     this.dataSource.loadCities({
       filter: this.filterContent,
       page: 0,

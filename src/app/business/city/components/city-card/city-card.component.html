@@ -11,10 +11,9 @@
       alt="Picture for {{ city.name }} is not available"
     />
   </mat-card-content>
-  <ng-container *ngIf="(canEdit$ | async)">
+  <ng-container *ngIf="canEdit$ | async">
     <mat-card-actions>
       <button mat-raised-button (click)="openEditDialog($event)">UPDATE</button>
     </mat-card-actions>
   </ng-container>
-  
 </mat-card>

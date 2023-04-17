@@ -38,7 +38,12 @@ export const CityListReducer = createReducer<CityListState>(
     isLoading: true,
   })),
   on(CityActions.loadCitiesSuccess, (state, response: PagedData<City[]>) => {
-    state = {...state, cityList:response.data, pageInfo: response.pageInfo, isLoading: false}
+    state = {
+      ...state,
+      cityList: response.data,
+      pageInfo: response.pageInfo,
+      isLoading: false,
+    };
     return state;
   }),
   on(CityActions.loadCitiesFailure, (state, error) => {
